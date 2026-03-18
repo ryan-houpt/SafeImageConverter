@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Safe Image Converter</title>
+  <meta name="description" content="Privacy policy for Safe Image Converter. The extension collects no data, has no analytics, and performs all image conversion locally in your browser." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="privacy-page">
+    <a href="index.html" class="back-link">← Back to Safe Image Converter</a>
+
+    <h1>Privacy Policy — Safe Image Format Converter</h1>
+    <p class="updated">Last updated: March 18, 2026</p>
+
+    <h2>Summary</h2>
+    <p>
+      Safe Image Format Converter does not collect, store, transmit, or share any personal data
+      or user information. There are no analytics, no telemetry, no accounts, and no external servers.
+    </p>
+
+    <h2>Data Collection</h2>
+    <p><strong>We collect no data.</strong> The extension does not:</p>
+    <ul>
+      <li>Record your browsing history or the pages you visit</li>
+      <li>Store or transmit any images you convert</li>
+      <li>Collect your name, email address, or any identifying information</li>
+      <li>Use analytics SDKs, crash reporting services, or third-party tracking</li>
+      <li>Create or require a user account</li>
+      <li>Communicate with any server operated by the developer</li>
+    </ul>
+
+    <h2>How the Extension Works</h2>
+    <p>When you right-click an image and select a save format, the extension:</p>
+    <ol style="margin: 0 0 16px 24px; color: #4b5563;">
+      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Reads the URL of the image from the browser's context menu event.</li>
+      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Fetches the image bytes from that URL.</li>
+      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Passes the image data to a hidden offscreen document where it is drawn onto an HTML Canvas element and converted.</li>
+      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Saves the converted file to your Downloads folder using Chrome's built-in download API.</li>
+    </ol>
+    <p>
+      At no point is any image data sent to a developer server, a cloud service, or any third party.
+    </p>
+
+    <h2>Settings Storage</h2>
+    <p>The extension stores preferences in <code>chrome.storage.local</code>:</p>
+    <ul>
+      <li>Your selected default format (PNG, JPG, or WebP)</li>
+      <li>Your output quality setting (1–100)</li>
+      <li>A count of successful conversions</li>
+      <li>Whether you have dismissed the "Rate Us" prompt</li>
+    </ul>
+    <p>This data never leaves your device.</p>
+
+    <h2>Permissions Explained</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Permission</th>
+          <th>Why It Is Needed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>contextMenus</code></td>
+          <td>Adds the "Save Image As PNG/JPG/WebP" items to the right-click menu</td>
+        </tr>
+        <tr>
+          <td><code>downloads</code></td>
+          <td>Saves the converted image file to your Downloads folder</td>
+        </tr>
+        <tr>
+          <td><code>notifications</code></td>
+          <td>Shows an OS-level notification if a conversion fails</td>
+        </tr>
+        <tr>
+          <td><code>offscreen</code></td>
+          <td>Creates a hidden browser document for Canvas API conversion</td>
+        </tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>Reads and writes your extension preferences to local storage</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Third Parties</h2>
+    <p>
+      This extension does not include, load, or communicate with any third-party services.
+    </p>
+
+    <h2>Children</h2>
+    <p>
+      This extension does not knowingly collect any information from anyone, including children under 13.
+    </p>
+
+    <h2>Changes to This Policy</h2>
+    <p>
+      If this privacy policy changes, the updated policy will be included in the extension package.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      If you have questions, open an issue on the extension's support page via the Chrome Web Store listing.
+    </p>
+  </div>
+
+</body>
+</html>
