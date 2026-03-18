@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=280">
@@ -10,23 +10,23 @@
   <!-- Header -->
   <header class="header">
     <img src="icons/icon48.png" alt="" class="header-icon" width="16" height="16">
-    <span class="header-title">Safe Image Converter</span>
+    <span class="header-title" id="header-title"></span>
   </header>
 
   <!-- Format Selector -->
   <section class="section">
-    <label class="section-label">Default format</label>
-    <div class="format-group" role="group" aria-label="Default format">
-      <button class="format-btn" data-format="png" aria-label="Set default format to PNG" aria-pressed="false">PNG</button>
-      <button class="format-btn" data-format="jpg" aria-label="Set default format to JPG" aria-pressed="false">JPG</button>
-      <button class="format-btn" data-format="webp" aria-label="Set default format to WebP" aria-pressed="false">WebP</button>
+    <label class="section-label" id="format-label"></label>
+    <div class="format-group" role="group" id="format-group">
+      <button class="format-btn" data-format="png" aria-pressed="false">PNG</button>
+      <button class="format-btn" data-format="jpg" aria-pressed="false">JPG</button>
+      <button class="format-btn" data-format="webp" aria-pressed="false">WebP</button>
     </div>
   </section>
 
-  <!-- JPG Quality -->
+  <!-- Output Quality -->
   <section class="section">
     <div class="quality-header">
-      <label class="section-label" for="quality-slider">Output quality</label>
+      <label class="section-label" for="quality-slider" id="quality-label"></label>
       <span class="quality-value" id="quality-value">85%</span>
     </div>
     <input
@@ -36,27 +36,26 @@
       min="1"
       max="100"
       value="85"
-      aria-label="Output quality"
     >
   </section>
 
   <!-- Conversion Counter -->
-  <section class="counter-section" aria-label="0 images converted">
+  <section class="counter-section" id="counter-section">
     <span class="counter-check">&#10003;</span>
-    <span class="counter-text" id="counter-text">0 images converted</span>
+    <span class="counter-text" id="counter-text"></span>
   </section>
 
   <!-- Trust Badge -->
   <section class="trust-section">
     <span class="trust-lock">&#128274;</span>
-    <span class="trust-text">Your images never leave your browser</span>
+    <span class="trust-text" id="trust-text"></span>
   </section>
 
   <!-- Rate Prompt (hidden by default) -->
   <section class="rate-section" id="rate-section" hidden>
-    <span class="rate-text">Enjoying this? Rate it on the Chrome Web Store</span>
-    <a class="rate-link" id="rate-link" href="#" aria-label="Rate on Chrome Web Store">Rate</a>
-    <button class="rate-dismiss" id="rate-dismiss" aria-label="Dismiss rating prompt">&times;</button>
+    <span class="rate-text" id="rate-text"></span>
+    <a class="rate-link" id="rate-link" href="#"></a>
+    <button class="rate-dismiss" id="rate-dismiss">&times;</button>
   </section>
 
   <script src="popup.js"></script>

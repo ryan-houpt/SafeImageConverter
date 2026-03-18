@@ -1,0 +1,94 @@
+{
+  "appName": {
+    "message": "Convertidor de Imágenes Seguro",
+    "description": "Extension name shown in toolbar and CWS"
+  },
+  "appDescription": {
+    "message": "Haz clic derecho en cualquier imagen para convertir y guardar como PNG, JPG o WebP. 100% local — tus imágenes nunca salen de tu navegador.",
+    "description": "Extension description shown in CWS"
+  },
+  "menuSaveAs": {
+    "message": "Guardar Imagen Como $FORMAT$",
+    "description": "Context menu item label",
+    "placeholders": {
+      "format": {
+        "content": "$1",
+        "example": "PNG"
+      }
+    }
+  },
+  "menuSaveAsDefault": {
+    "message": "Guardar Imagen Como $FORMAT$ (predeterminado)",
+    "description": "Context menu item label for the default format",
+    "placeholders": {
+      "format": {
+        "content": "$1",
+        "example": "PNG"
+      }
+    }
+  },
+  "headerTitle": {
+    "message": "Convertidor de Imágenes Seguro",
+    "description": "Popup header title"
+  },
+  "defaultFormat": {
+    "message": "Formato predeterminado",
+    "description": "Label above format selector buttons"
+  },
+  "setDefaultFormat": {
+    "message": "Establecer formato predeterminado a $FORMAT$",
+    "description": "Aria label for format button",
+    "placeholders": {
+      "format": {
+        "content": "$1",
+        "example": "PNG"
+      }
+    }
+  },
+  "outputQuality": {
+    "message": "Calidad de salida",
+    "description": "Label for the quality slider"
+  },
+  "imagesConverted": {
+    "message": "$COUNT$ imágenes convertidas",
+    "description": "Conversion counter text",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "oneImageConverted": {
+    "message": "1 imagen convertida",
+    "description": "Conversion counter text for exactly 1 image"
+  },
+  "trustMessage": {
+    "message": "Tus imágenes nunca salen de tu navegador",
+    "description": "Privacy trust badge text"
+  },
+  "ratePrompt": {
+    "message": "¿Te gusta? Califícalo en la Chrome Web Store",
+    "description": "Rate prompt text"
+  },
+  "rateAction": {
+    "message": "Calificar",
+    "description": "Rate link text"
+  },
+  "rateDismiss": {
+    "message": "Cerrar aviso de calificación",
+    "description": "Aria label for dismiss button"
+  },
+  "rateAriaLabel": {
+    "message": "Calificar en Chrome Web Store",
+    "description": "Aria label for rate link"
+  },
+  "errorTitle": {
+    "message": "Convertidor de Imágenes Seguro",
+    "description": "Notification title on error"
+  },
+  "errorMessage": {
+    "message": "No se pudo convertir esta imagen. La fuente puede estar restringida.",
+    "description": "Notification message on conversion error"
+  }
+}

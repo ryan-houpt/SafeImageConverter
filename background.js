@@ -19,8 +19,8 @@ let offscreenCloseTimer = null;
 function menuLabel(format, defaultFormat) {
   const upper = format.toUpperCase();
   return format === defaultFormat
-    ? `Save Image As ${upper} (default)`
-    : `Save Image As ${upper}`;
+    ? chrome.i18n.getMessage('menuSaveAsDefault', [upper])
+    : chrome.i18n.getMessage('menuSaveAs', [upper]);
 }
 
 async function createContextMenus(defaultFormat) {
@@ -175,8 +175,8 @@ function showConversionError() {
   chrome.notifications.create({
     type: 'basic',
     iconUrl: 'icons/icon48.png',
-    title: 'Safe Image Converter',
-    message: 'Could not convert this image. The source may be restricted.'
+    title: chrome.i18n.getMessage('errorTitle'),
+    message: chrome.i18n.getMessage('errorMessage')
   });
 }
 

@@ -1,0 +1,94 @@
+{
+  "appName": {
+    "message": "Safe Image Converter",
+    "description": "Extension name shown in toolbar and CWS"
+  },
+  "appDescription": {
+    "message": "Right-click any image to convert and save as PNG, JPG, or WebP. 100% local — your images never leave your browser.",
+    "description": "Extension description shown in CWS (max 132 chars)"
+  },
+  "menuSaveAs": {
+    "message": "Save Image As $FORMAT$",
+    "description": "Context menu item label",
+    "placeholders": {
+      "format": {
+        "content": "$1",
+        "example": "PNG"
+      }
+    }
+  },
+  "menuSaveAsDefault": {
+    "message": "Save Image As $FORMAT$ (default)",
+    "description": "Context menu item label for the default format",
+    "placeholders": {
+      "format": {
+        "content": "$1",
+        "example": "PNG"
+      }
+    }
+  },
+  "headerTitle": {
+    "message": "Safe Image Converter",
+    "description": "Popup header title"
+  },
+  "defaultFormat": {
+    "message": "Default format",
+    "description": "Label above format selector buttons"
+  },
+  "setDefaultFormat": {
+    "message": "Set default format to $FORMAT$",
+    "description": "Aria label for format button",
+    "placeholders": {
+      "format": {
+        "content": "$1",
+        "example": "PNG"
+      }
+    }
+  },
+  "outputQuality": {
+    "message": "Output quality",
+    "description": "Label for the quality slider"
+  },
+  "imagesConverted": {
+    "message": "$COUNT$ images converted",
+    "description": "Conversion counter text",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "12"
+      }
+    }
+  },
+  "oneImageConverted": {
+    "message": "1 image converted",
+    "description": "Conversion counter text for exactly 1 image"
+  },
+  "trustMessage": {
+    "message": "Your images never leave your browser",
+    "description": "Privacy trust badge text"
+  },
+  "ratePrompt": {
+    "message": "Enjoying this? Rate it on the Chrome Web Store",
+    "description": "Rate prompt text"
+  },
+  "rateAction": {
+    "message": "Rate",
+    "description": "Rate link text"
+  },
+  "rateDismiss": {
+    "message": "Dismiss rating prompt",
+    "description": "Aria label for dismiss button"
+  },
+  "rateAriaLabel": {
+    "message": "Rate on Chrome Web Store",
+    "description": "Aria label for rate link"
+  },
+  "errorTitle": {
+    "message": "Safe Image Converter",
+    "description": "Notification title on error"
+  },
+  "errorMessage": {
+    "message": "Could not convert this image. The source may be restricted.",
+    "description": "Notification message on conversion error"
+  }
+}

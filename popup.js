@@ -3,11 +3,34 @@
  *
  * Loads current settings from chrome.storage.local on every open.
  * Saves changes immediately. Shows rate prompt after 5 conversions.
+ * All user-facing text loaded via chrome.i18n for localization.
  */
 
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
+  // --- Localize UI text ---
+  document.getElementById('header-title').textContent = chrome.i18n.getMessage('headerTitle');
+  document.getElementById('format-label').textContent = chrome.i18n.getMessage('defaultFormat');
+  document.getElementById('format-group').setAttribute('aria-label', chrome.i18n.getMessage('defaultFormat'));
+  document.getElementById('quality-label').textContent = chrome.i18n.getMessage('outputQuality');
+  document.getElementById('trust-text').textContent = chrome.i18n.getMessage('trustMessage');
+  document.getElementById('rate-text').textContent = chrome.i18n.getMessage('ratePrompt');
+  document.getElementById('rate-link').textContent = chrome.i18n.getMessage('rateAction');
+  document.getElementById('rate-link').setAttribute('aria-label', chrome.i18n.getMessage('rateAriaLabel'));
+  document.getElementById('rate-dismiss').setAttribute('aria-label', chrome.i18n.getMessage('rateDismiss'));
+
+  // Localize format button aria-labels
+  const formatButtons = document.querySelectorAll('.format-btn');
+  formatButtons.forEach((btn) => {
+    const fmt = btn.getAttribute('data-format').toUpperCase();
+    btn.setAttribute('aria-label', chrome.i18n.getMessage('setDefaultFormat', [fmt]));
+  });
+
+  // Localize quality slider aria-label
+  document.getElementById('quality-slider').setAttribute('aria-label', chrome.i18n.getMessage('outputQuality'));
+
+  // --- Load settings ---
   const settings = await chrome.storage.local.get({
     defaultFormat: 'png',
     jpgQuality: 85,
@@ -16,7 +39,6 @@ async function init() {
   });
 
   // --- Format Buttons ---
-  const formatButtons = document.querySelectorAll('.format-btn');
   setActiveFormat(formatButtons, settings.defaultFormat);
 
   formatButtons.forEach((btn) => {
@@ -54,7 +76,6 @@ async function init() {
 
   rateLink.addEventListener('click', (e) => {
     e.preventDefault();
-    // Open Chrome Web Store listing using runtime ID for auto-resolution
     chrome.tabs.create({
       url: `https://chromewebstore.google.com/detail/${chrome.runtime.id}`
     });
@@ -75,8 +96,15 @@ function setActiveFormat(buttons, activeFormat) {
 
 function updateCounter(count) {
   const counterText = document.getElementById('counter-text');
-  const counterSection = counterText.closest('.counter-section');
-  const label = count === 1 ? '1 image converted' : count + ' images converted';
+  const counterSection = document.getElementById('counter-section');
+
+  let label;
+  if (count === 1) {
+    label = chrome.i18n.getMessage('oneImageConverted');
+  } else {
+    label = chrome.i18n.getMessage('imagesConverted', [String(count)]);
+  }
+
   counterText.textContent = label;
   counterSection.setAttribute('aria-label', label);
 }

@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Safe Image Format Converter",
+  "name": "__MSG_appName__",
   "version": "1.0.0",
-  "description": "Right-click any image to convert and save as PNG, JPG, or WebP. 100% local — your images never leave your browser.",
+  "description": "__MSG_appDescription__",
+  "default_locale": "en",
   "permissions": [
     "contextMenus",
     "downloads",
