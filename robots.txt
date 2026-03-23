@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ryan-houpt.github.io/SafeImageConverter/sitemap.xml

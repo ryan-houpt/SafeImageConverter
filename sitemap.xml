@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://ryan-houpt.github.io/SafeImageConverter/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ryan-houpt.github.io/SafeImageConverter/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://ryan-houpt.github.io/SafeImageConverter/es/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ryan-houpt.github.io/SafeImageConverter/pt-br/" />
+    <lastmod>2026-03-23</lastmod>
+  </url>
+  <url>
+    <loc>https://ryan-houpt.github.io/SafeImageConverter/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ryan-houpt.github.io/SafeImageConverter/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://ryan-houpt.github.io/SafeImageConverter/es/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ryan-houpt.github.io/SafeImageConverter/pt-br/" />
+    <lastmod>2026-03-23</lastmod>
+  </url>
+  <url>
+    <loc>https://ryan-houpt.github.io/SafeImageConverter/pt-br/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ryan-houpt.github.io/SafeImageConverter/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://ryan-houpt.github.io/SafeImageConverter/es/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ryan-houpt.github.io/SafeImageConverter/pt-br/" />
+    <lastmod>2026-03-23</lastmod>
+  </url>
+  <url>
+    <loc>https://ryan-houpt.github.io/SafeImageConverter/privacy.html</loc>
+    <lastmod>2026-03-23</lastmod>
+  </url>
+</urlset>
