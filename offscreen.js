@@ -19,14 +19,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     .then(sendResponse)
     .catch(() => sendResponse(null));
 
-  // Return true to indicate async response
   return true;
 });
 
 async function handleConversion(message) {
-  const { imageBase64, format, quality } = message;
+  const {
+    imageBase64,
+    format,
+    quality,
+    jpgBackground,
+    removePreviewBackground: shouldRemovePreviewBackground
+  } = message;
 
-  // Decode base64 to a Blob
   const binary = atob(imageBase64);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) {
@@ -34,30 +38,44 @@ async function handleConversion(message) {
   }
   const blob = new Blob([bytes]);
 
-  // Load into an image element
   const img = await loadImage(blob);
 
-  // Draw to canvas
   const canvas = document.createElement('canvas');
   canvas.width = img.naturalWidth;
   canvas.height = img.naturalHeight;
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', {
+    willReadFrequently: shouldRemovePreviewBackground === true
+  });
+  if (!ctx) {
+    throw new Error('Canvas 2D context unavailable');
+  }
+
   ctx.drawImage(img, 0, 0);
 
-  // Convert to target format using toBlob (avoids data URL size limits)
-  const mimeType = MIME_TYPES[format] || MIME_TYPES.png;
-  const qualityParam = (format === 'jpg' || format === 'webp') ? quality : undefined;
+  const outputFormat = Object.prototype.hasOwnProperty.call(MIME_TYPES, format)
+    ? format
+    : 'png';
 
+  if (shouldRemovePreviewBackground) {
+    removePreviewBackground(ctx, canvas.width, canvas.height);
+  }
+
+  if (outputFormat === 'jpg') {
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = jpgBackground === 'black' ? '#000000' : '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  const mimeType = MIME_TYPES[outputFormat] || MIME_TYPES.png;
+  const qualityParam = (outputFormat === 'jpg' || outputFormat === 'webp') ? quality : undefined;
   const resultBlob = await canvasToBlob(canvas, mimeType, qualityParam);
-
-  // Convert blob to base64 for message passing
   const resultBase64 = await blobToBase64(resultBlob);
 
-  // Clean up the object URL
   URL.revokeObjectURL(img.src);
 
-  return { base64: resultBase64, mimeType: mimeType };
+  return { base64: resultBase64, mimeType, format: outputFormat };
 }
 
 function loadImage(blob) {
@@ -89,8 +107,6 @@ function blobToBase64(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      // reader.result is a data URL like "data:mime;base64,XXXX"
-      // Extract just the base64 portion
       const dataUrl = reader.result;
       const base64 = dataUrl.split(',')[1];
       resolve(base64);
@@ -98,4 +114,189 @@ function blobToBase64(blob) {
     reader.onerror = () => reject(new Error('Failed to read blob'));
     reader.readAsDataURL(blob);
   });
+}
+
+function removePreviewBackground(ctx, width, height) {
+  const imageData = ctx.getImageData(0, 0, width, height);
+  const { data } = imageData;
+  const visited = new Uint8Array(width * height);
+  const stack = [];
+  const backgroundProfile = getPreviewBackgroundProfile(data, width, height);
+
+  if (!backgroundProfile) {
+    return;
+  }
+
+  function enqueue(x, y) {
+    if (x < 0 || x >= width || y < 0 || y >= height) return;
+
+    const pixelIndex = y * width + x;
+    if (visited[pixelIndex]) return;
+    visited[pixelIndex] = 1;
+
+    const offset = pixelIndex * 4;
+    if (!matchesBackgroundPalette(data, offset, backgroundProfile.palette)) return;
+
+    stack.push(pixelIndex);
+  }
+
+  let matchingCornerCount = 0;
+  for (const corner of backgroundProfile.corners) {
+    if (matchesBackgroundPalette(data, ((corner.y * width) + corner.x) * 4, backgroundProfile.palette)) {
+      matchingCornerCount += 1;
+      enqueue(corner.x, corner.y);
+    }
+  }
+
+  const minimumMatchingCorners = backgroundProfile.corners.length === 4
+    ? 3
+    : backgroundProfile.corners.length;
+  if (matchingCornerCount < minimumMatchingCorners) {
+    return;
+  }
+
+  while (stack.length > 0) {
+    const pixelIndex = stack.pop();
+    const offset = pixelIndex * 4;
+    data[offset + 3] = 0;
+
+    const x = pixelIndex % width;
+    const y = Math.floor(pixelIndex / width);
+
+    enqueue(x - 1, y);
+    enqueue(x + 1, y);
+    enqueue(x, y - 1);
+    enqueue(x, y + 1);
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+}
+
+function getPreviewBackgroundProfile(data, width, height) {
+  const corners = getUniqueCornerPoints(width, height);
+  const palette = detectBackgroundPalette(data, width, height, corners);
+
+  if (palette.length === 0) {
+    return null;
+  }
+
+  let matchingCornerCount = 0;
+  for (const corner of corners) {
+    if (matchesBackgroundPalette(data, ((corner.y * width) + corner.x) * 4, palette)) {
+      matchingCornerCount += 1;
+    }
+  }
+
+  const minimumMatchingCorners = corners.length === 4 ? 3 : corners.length;
+  if (matchingCornerCount < minimumMatchingCorners) {
+    return null;
+  }
+
+  return {
+    corners,
+    palette,
+    kind: classifyBackgroundPalette(palette)
+  };
+}
+
+function detectBackgroundPalette(data, width, height, corners) {
+  const palette = [];
+  const maxScanDistance = Math.min(32, Math.max(width, height) - 1);
+
+  function addColorFromPoint(x, y) {
+    if (x < 0 || x >= width || y < 0 || y >= height) return;
+    const offset = ((y * width) + x) * 4;
+    if (!isNeutralLightPixel(data, offset)) return;
+
+    const color = {
+      r: data[offset],
+      g: data[offset + 1],
+      b: data[offset + 2]
+    };
+
+    if (palette.some((entry) => colorDistance(entry, color) <= 18)) return;
+    palette.push(color);
+  }
+
+  for (const corner of corners) {
+    addColorFromPoint(corner.x, corner.y);
+  }
+
+  const directions = [
+    { dx: 1, dy: 0 },
+    { dx: 0, dy: 1 },
+    { dx: -1, dy: 0 },
+    { dx: 0, dy: -1 }
+  ];
+
+  corners.forEach((corner, index) => {
+    const horizontalDirection = directions[index % 2 === 0 ? 0 : 2];
+    const verticalDirection = directions[index < 2 ? 1 : 3];
+
+    scanFromCorner(corner, horizontalDirection.dx, horizontalDirection.dy);
+    scanFromCorner(corner, verticalDirection.dx, verticalDirection.dy);
+  });
+
+  return palette.slice(0, 2);
+
+  function scanFromCorner(corner, dx, dy) {
+    for (let distance = 1; distance <= maxScanDistance && palette.length < 2; distance++) {
+      addColorFromPoint(corner.x + (dx * distance), corner.y + (dy * distance));
+    }
+  }
+}
+
+function classifyBackgroundPalette(palette) {
+  if (palette.length >= 2 && colorDistance(palette[0], palette[1]) >= 18) {
+    return 'checker';
+  }
+
+  return 'white';
+}
+
+function getUniqueCornerPoints(width, height) {
+  const points = [
+    { x: 0, y: 0 },
+    { x: width - 1, y: 0 },
+    { x: 0, y: height - 1 },
+    { x: width - 1, y: height - 1 }
+  ];
+
+  const uniquePoints = [];
+  const seen = new Set();
+  for (const point of points) {
+    const key = `${point.x}:${point.y}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    uniquePoints.push(point);
+  }
+
+  return uniquePoints;
+}
+
+function isNeutralLightPixel(data, offset) {
+  return data[offset + 3] > 0 &&
+    Math.max(data[offset], data[offset + 1], data[offset + 2]) -
+      Math.min(data[offset], data[offset + 1], data[offset + 2]) <= 20 &&
+    ((data[offset] + data[offset + 1] + data[offset + 2]) / 3) >= 185;
+}
+
+function matchesBackgroundPalette(data, offset, palette) {
+  if (data[offset + 3] === 0) return false;
+
+  const pixel = {
+    r: data[offset],
+    g: data[offset + 1],
+    b: data[offset + 2]
+  };
+
+  return palette.some((color) => colorDistance(color, pixel) <= 22);
+}
+
+function colorDistance(left, right) {
+  return Math.max(
+    Math.abs(left.r - right.r),
+    Math.abs(left.g - right.g),
+    Math.abs(left.b - right.b)
+  );
 }

@@ -4,7 +4,7 @@
     "description": "Extension name shown in toolbar and CWS"
   },
   "appDescription": {
-    "message": "Right-click any image to convert and save as PNG, JPG, or WebP. 100% local — your images never leave your browser.",
+    "message": "Right-click images to save as PNG, JPG, or WebP, remove white/checker backgrounds, or add white/black fills locally.",
     "description": "Extension description shown in CWS (max 132 chars)"
   },
   "menuSaveAs": {
@@ -27,6 +27,18 @@
       }
     }
   },
+  "menuRemoveWhiteBackground": {
+    "message": "Remove White / Checker Background",
+    "description": "Context menu item label for removing a white or checkerboard preview background"
+  },
+  "menuAddWhiteBackground": {
+    "message": "Add White Background",
+    "description": "Context menu item label for flattening transparency onto white"
+  },
+  "menuAddBlackBackground": {
+    "message": "Add Black Background",
+    "description": "Context menu item label for flattening transparency onto black"
+  },
   "headerTitle": {
     "message": "Safe Image Converter",
     "description": "Popup header title"
@@ -48,6 +60,22 @@
   "outputQuality": {
     "message": "Output quality",
     "description": "Label for the quality slider"
+  },
+  "whatsNewKicker": {
+    "message": "What's New",
+    "description": "Kicker above the popup update notice"
+  },
+  "whatsNewTitle": {
+    "message": "Smarter download names",
+    "description": "Title for the popup update notice"
+  },
+  "whatsNewBody": {
+    "message": "Downloads now use better names from the image, page, and source URL when available.",
+    "description": "Body text for the popup update notice"
+  },
+  "whatsNewDismiss": {
+    "message": "Dismiss what's new notice",
+    "description": "Aria label for dismissing the popup update notice"
   },
   "imagesConverted": {
     "message": "$COUNT$ images converted",

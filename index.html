@@ -6,7 +6,7 @@
 
   <!-- Primary SEO -->
   <title>Safe Image Converter — Save Images as PNG, JPG, WebP | Free Chrome Extension</title>
-  <meta name="description" content="Free Save Image as Type replacement — right-click any image to save as PNG, JPG, or WebP. 100% local conversion, no data collection. Privacy-first Chrome extension for converting image formats." />
+  <meta name="description" content="Right-click images to save as PNG, JPG, or WebP, remove white or checker backgrounds, or add white and black fills. 100% local conversion." />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://ryan-houpt.github.io/SafeImageConverter/" />
@@ -20,7 +20,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Safe Image Converter — Save Images as PNG, JPG, WebP | Free Chrome Extension" />
-  <meta property="og:description" content="Free Save Image as Type replacement — right-click any image to save as PNG, JPG, or WebP. 100% local conversion, no data collection." />
+  <meta property="og:description" content="Right-click images to save as PNG, JPG, or WebP, remove white or checker backgrounds, or add white and black fills locally." />
   <meta property="og:url" content="https://ryan-houpt.github.io/SafeImageConverter/" />
 
   <!-- JSON-LD Structured Data -->
@@ -29,7 +29,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Safe Image Converter",
-    "description": "Free Save Image as Type replacement. Right-click any image to save as PNG, JPG, or WebP. 100% local conversion — your images never leave your browser.",
+    "description": "Right-click images to save as PNG, JPG, or WebP, remove white or checker backgrounds, or add white and black fills locally.",
     "applicationCategory": "BrowserApplication",
     "operatingSystem": "Chrome",
     "url": "https://ryan-houpt.github.io/SafeImageConverter/",
@@ -68,7 +68,7 @@
         "name": "How do I save an image as PNG, JPG, or WebP in Chrome?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Install Safe Image Converter, then right-click any image on any webpage. You'll see three new options: Save image as PNG, Save image as JPG, and Save image as WebP. Click your preferred format and the converted file downloads instantly."
+          "text": "Install Safe Image Converter, then right-click any image on any webpage. You'll see options to save as PNG, JPG, or WebP, remove a white or checker background, or add a white or black background. Click the action you need and the converted file downloads instantly."
         }
       },
       {
@@ -76,7 +76,7 @@
         "name": "Does this extension collect any data?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Safe Image Converter collects zero data. There are no analytics SDKs, no crash reporting, no user accounts, and no server to send data to. Your preferences (format and quality settings) are stored locally on your device only."
+          "text": "No. Safe Image Converter collects zero personal data. There are no analytics SDKs, no crash reporting, no user accounts, and no developer server. Preferences and local counters stay on your device only."
         }
       }
     ]
@@ -97,13 +97,13 @@
       <h1>Save any image as PNG, JPG, or WebP</h1>
 
       <p class="subhead">
-        Right-click, pick a format, done. 100% local conversion —
-        your images never leave your browser.
+        Right-click to save as PNG, JPG, or WebP, remove white or checker
+        backgrounds, or add white and black fills. 100% local conversion.
       </p>
 
       <a href="https://chromewebstore.google.com/detail/safe-image-converter/ahmpphfojckjpfkcbecphlpocabebppb" class="btn-primary">Add to Chrome — Free</a>
 
-      <div class="context-menu-visual" role="img" aria-label="Chrome right-click context menu showing Save Image as PNG, JPG, and WebP options">
+      <div class="context-menu-visual" role="img" aria-label="Chrome right-click context menu showing image save and background actions">
         <div class="context-menu-item ghost">Open image in new tab</div>
         <div class="context-menu-item ghost">Copy image</div>
         <div class="context-menu-item ghost">Copy image address</div>
@@ -112,6 +112,9 @@
         <div class="context-menu-item extension">Save image as PNG</div>
         <div class="context-menu-item extension">Save image as JPG</div>
         <div class="context-menu-item extension">Save image as WebP</div>
+        <div class="context-menu-item extension">Remove white / checker background</div>
+        <div class="context-menu-item extension">Add white background</div>
+        <div class="context-menu-item extension">Add black background</div>
       </div>
     </div>
   </section>
@@ -132,9 +135,9 @@
         </p>
 
         <p>
-          Safe Image Converter does exactly what that extension did, with one key difference:
-          it was built with privacy and transparency as the foundation. Every line of code is
-          focused solely on converting images locally — nothing else.
+          Safe Image Converter covers that core workflow and now adds direct background cleanup
+          actions too. It was built with privacy and transparency as the foundation, and every
+          line of code is focused solely on converting images locally — nothing else.
         </p>
 
         <div class="callout-box">
@@ -158,7 +161,7 @@
           <h3>Right-click any image</h3>
           <p>
             On any webpage, right-click an image to open the context menu.
-            The extension adds three new options automatically.
+            The extension adds save and background actions automatically.
           </p>
         </div>
 
@@ -166,8 +169,9 @@
           <div class="step-icon green" aria-hidden="true">🎨</div>
           <h3>Pick your format</h3>
           <p>
-            Choose Save as PNG, JPG, or WebP. The conversion happens
-            instantly in your browser using the Canvas API.
+            Choose Save as PNG, JPG, or WebP, remove a white/checker
+            background, or add a white/black background. The conversion
+            happens instantly in your browser using the Canvas API.
           </p>
         </div>
 
@@ -201,6 +205,33 @@
         </div>
 
         <div class="feature-card">
+          <div class="feature-card-icon" aria-hidden="true">✨</div>
+          <h3>Remove White / Checker Backgrounds</h3>
+          <p>
+            Turn plain white backgrounds or checkerboard previews into
+            transparency with a single right-click action.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon" aria-hidden="true">⬜</div>
+          <h3>Add White or Black Backgrounds</h3>
+          <p>
+            Flatten transparent images onto a clean white or black
+            backdrop when you need a JPG fast.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon" aria-hidden="true">🎯</div>
+          <h3>Better Source Matching</h3>
+          <p>
+            Tries the best available image URL first, which helps on
+            preview-heavy pages like search results and galleries.
+          </p>
+        </div>
+
+        <div class="feature-card">
           <div class="feature-card-icon" aria-hidden="true">🎚️</div>
           <h3>Adjustable Quality</h3>
           <p>
@@ -210,38 +241,11 @@
         </div>
 
         <div class="feature-card">
-          <div class="feature-card-icon" aria-hidden="true">🏷️</div>
-          <h3>Smart Filenames</h3>
+          <div class="feature-card-icon" aria-hidden="true">🔓</div>
+          <h3>No Account Needed</h3>
           <p>
-            Downloaded files are named based on the original image URL
-            so your downloads folder stays organized.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-card-icon" aria-hidden="true">🌐</div>
-          <h3>Works Everywhere</h3>
-          <p>
-            Works on any webpage in Chrome — photos, product images,
-            social media, news articles, and more.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-card-icon" aria-hidden="true">⚡</div>
-          <h3>Zero Config</h3>
-          <p>
-            Install and it just works. No account, no setup, no
-            permissions beyond what's strictly needed.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-card-icon" aria-hidden="true">🆓</div>
-          <h3>100% Free</h3>
-          <p>
-            No freemium tier, no premium upsell. All features are
-            available to everyone, always.
+            Install the free core extension and use it immediately.
+            No signup, no login, no setup flow.
           </p>
         </div>
       </div>
@@ -259,8 +263,9 @@
 
       <p>
         Image conversion happens entirely inside your browser using the standard Canvas API.
-        Your images are never uploaded, never analyzed, and never stored anywhere outside
-        your own device. The extension has no server to send data to — because it doesn't need one.
+        The extension fetches the image you click so it can draw it locally, and that is the only
+        network request it makes. Your images are never uploaded, analyzed, or sent to any
+        developer-controlled server.
       </p>
 
       <div class="badge-row">

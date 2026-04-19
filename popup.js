@@ -9,6 +9,8 @@
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
+  const currentVersion = chrome.runtime.getManifest().version;
+
   // --- Localize UI text ---
   document.getElementById('header-title').textContent = chrome.i18n.getMessage('headerTitle');
   document.getElementById('format-label').textContent = chrome.i18n.getMessage('defaultFormat');
@@ -19,15 +21,17 @@ async function init() {
   document.getElementById('rate-link').textContent = chrome.i18n.getMessage('rateAction');
   document.getElementById('rate-link').setAttribute('aria-label', chrome.i18n.getMessage('rateAriaLabel'));
   document.getElementById('rate-dismiss').setAttribute('aria-label', chrome.i18n.getMessage('rateDismiss'));
+  document.getElementById('whats-new-kicker').textContent = chrome.i18n.getMessage('whatsNewKicker');
+  document.getElementById('whats-new-title').textContent = chrome.i18n.getMessage('whatsNewTitle');
+  document.getElementById('whats-new-body').textContent = chrome.i18n.getMessage('whatsNewBody');
+  document.getElementById('whats-new-dismiss').setAttribute('aria-label', chrome.i18n.getMessage('whatsNewDismiss'));
 
-  // Localize format button aria-labels
-  const formatButtons = document.querySelectorAll('.format-btn');
+  const formatButtons = document.querySelectorAll('.format-btn[data-format]');
   formatButtons.forEach((btn) => {
-    const fmt = btn.getAttribute('data-format').toUpperCase();
-    btn.setAttribute('aria-label', chrome.i18n.getMessage('setDefaultFormat', [fmt]));
+    const format = btn.getAttribute('data-format').toUpperCase();
+    btn.setAttribute('aria-label', chrome.i18n.getMessage('setDefaultFormat', [format]));
   });
 
-  // Localize quality slider aria-label
   document.getElementById('quality-slider').setAttribute('aria-label', chrome.i18n.getMessage('outputQuality'));
 
   // --- Load settings ---
@@ -35,17 +39,18 @@ async function init() {
     defaultFormat: 'png',
     jpgQuality: 85,
     conversionCount: 0,
-    ratePromptDismissed: false
+    ratePromptDismissed: false,
+    pendingWhatsNewVersion: ''
   });
 
   // --- Format Buttons ---
-  setActiveFormat(formatButtons, settings.defaultFormat);
+  setActiveButtons(formatButtons, settings.defaultFormat, 'data-format');
 
   formatButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const format = btn.getAttribute('data-format');
-      setActiveFormat(formatButtons, format);
-      chrome.storage.local.set({ defaultFormat: format });
+      setActiveButtons(formatButtons, format, 'data-format');
+      await chrome.storage.local.set({ defaultFormat: format });
     });
   });
 
@@ -56,10 +61,23 @@ async function init() {
   slider.value = settings.jpgQuality;
   qualityValue.textContent = settings.jpgQuality + '%';
 
-  slider.addEventListener('input', () => {
-    const val = parseInt(slider.value, 10);
-    qualityValue.textContent = val + '%';
-    chrome.storage.local.set({ jpgQuality: val });
+  slider.addEventListener('input', async () => {
+    const value = parseInt(slider.value, 10);
+    qualityValue.textContent = value + '%';
+    await chrome.storage.local.set({ jpgQuality: value });
+  });
+
+  // --- What's New ---
+  const whatsNewSection = document.getElementById('whats-new-section');
+  const whatsNewDismiss = document.getElementById('whats-new-dismiss');
+
+  if (settings.pendingWhatsNewVersion === currentVersion) {
+    whatsNewSection.hidden = false;
+  }
+
+  whatsNewDismiss.addEventListener('click', async () => {
+    whatsNewSection.hidden = true;
+    await chrome.storage.local.set({ pendingWhatsNewVersion: '' });
   });
 
   // --- Conversion Counter ---
@@ -74,22 +92,22 @@ async function init() {
     rateSection.hidden = false;
   }
 
-  rateLink.addEventListener('click', (e) => {
-    e.preventDefault();
+  rateLink.addEventListener('click', (event) => {
+    event.preventDefault();
     chrome.tabs.create({
       url: `https://chromewebstore.google.com/detail/${chrome.runtime.id}`
     });
   });
 
-  rateDismiss.addEventListener('click', () => {
+  rateDismiss.addEventListener('click', async () => {
     rateSection.hidden = true;
-    chrome.storage.local.set({ ratePromptDismissed: true });
+    await chrome.storage.local.set({ ratePromptDismissed: true });
   });
 }
 
-function setActiveFormat(buttons, activeFormat) {
+function setActiveButtons(buttons, activeValue, attributeName) {
   buttons.forEach((btn) => {
-    const isActive = btn.getAttribute('data-format') === activeFormat;
+    const isActive = btn.getAttribute(attributeName) === activeValue;
     btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
 }

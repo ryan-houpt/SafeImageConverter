@@ -17,9 +17,9 @@
   <section class="section">
     <label class="section-label" id="format-label"></label>
     <div class="format-group" role="group" id="format-group">
-      <button class="format-btn" data-format="png" aria-pressed="false">PNG</button>
-      <button class="format-btn" data-format="jpg" aria-pressed="false">JPG</button>
-      <button class="format-btn" data-format="webp" aria-pressed="false">WebP</button>
+      <button type="button" class="format-btn" data-format="png" aria-pressed="false">PNG</button>
+      <button type="button" class="format-btn" data-format="jpg" aria-pressed="false">JPG</button>
+      <button type="button" class="format-btn" data-format="webp" aria-pressed="false">WebP</button>
     </div>
   </section>
 
@@ -39,6 +39,15 @@
     >
   </section>
 
+  <section class="notice-section" id="whats-new-section" hidden>
+    <div class="notice-topline">
+      <span class="notice-kicker" id="whats-new-kicker"></span>
+      <button type="button" class="notice-dismiss" id="whats-new-dismiss">&times;</button>
+    </div>
+    <h2 class="notice-title" id="whats-new-title"></h2>
+    <p class="notice-body" id="whats-new-body"></p>
+  </section>
+
   <!-- Conversion Counter -->
   <section class="counter-section" id="counter-section">
     <span class="counter-check">&#10003;</span>
@@ -55,7 +64,7 @@
   <section class="rate-section" id="rate-section" hidden>
     <span class="rate-text" id="rate-text"></span>
     <a class="rate-link" id="rate-link" href="#"></a>
-    <button class="rate-dismiss" id="rate-dismiss">&times;</button>
+    <button type="button" class="rate-dismiss" id="rate-dismiss">&times;</button>
   </section>
 
   <script src="popup.js"></script>

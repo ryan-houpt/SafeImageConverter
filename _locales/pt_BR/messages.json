@@ -4,7 +4,7 @@
     "description": "Extension name shown in toolbar and CWS"
   },
   "appDescription": {
-    "message": "Clique com o botão direito em qualquer imagem para converter e salvar como PNG, JPG ou WebP. 100% local — suas imagens nunca saem do seu navegador.",
+    "message": "Clique com o botão direito em imagens para salvar como PNG, JPG ou WebP, remover fundo branco/quadriculado ou adicionar branco/preto.",
     "description": "Extension description shown in CWS"
   },
   "menuSaveAs": {
@@ -27,6 +27,18 @@
       }
     }
   },
+  "menuRemoveWhiteBackground": {
+    "message": "Remover fundo branco / quadriculado",
+    "description": "Rótulo do menu de contexto para remover um fundo branco ou quadriculado"
+  },
+  "menuAddWhiteBackground": {
+    "message": "Adicionar fundo branco",
+    "description": "Rótulo do menu de contexto para achatar a transparência sobre branco"
+  },
+  "menuAddBlackBackground": {
+    "message": "Adicionar fundo preto",
+    "description": "Rótulo do menu de contexto para achatar a transparência sobre preto"
+  },
   "headerTitle": {
     "message": "Conversor de Imagens Seguro",
     "description": "Popup header title"
@@ -48,6 +60,22 @@
   "outputQuality": {
     "message": "Qualidade de saída",
     "description": "Label for the quality slider"
+  },
+  "whatsNewKicker": {
+    "message": "Novidades",
+    "description": "Kicker above the popup update notice"
+  },
+  "whatsNewTitle": {
+    "message": "Nomes de download mais inteligentes",
+    "description": "Title for the popup update notice"
+  },
+  "whatsNewBody": {
+    "message": "Os downloads agora usam nomes melhores com base na imagem, na página e na URL de origem quando disponível.",
+    "description": "Body text for the popup update notice"
+  },
+  "whatsNewDismiss": {
+    "message": "Fechar aviso de novidades",
+    "description": "Aria label for dismissing the popup update notice"
   },
   "imagesConverted": {
     "message": "$COUNT$ imagens convertidas",

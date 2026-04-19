@@ -20,13 +20,15 @@
   <div class="privacy-page">
     <a href="index.html" class="back-link">← Back to Safe Image Converter</a>
 
-    <h1>Privacy Policy — Safe Image Format Converter</h1>
-    <p class="updated">Last updated: March 18, 2026</p>
+    <h1>Privacy Policy — Safe Image Converter</h1>
+    <p class="updated">Last updated: April 16, 2026</p>
 
     <h2>Summary</h2>
     <p>
-      Safe Image Format Converter does not collect, store, transmit, or share any personal data
-      or user information. There are no analytics, no telemetry, no accounts, and no external servers.
+      Safe Image Converter does not collect, store, transmit, or share any personal data or user
+      information. There are no analytics, no telemetry, no accounts, and no developer-controlled servers.
+      The only network requests the extension makes are direct requests to the image URLs on the sites
+      where you use it.
     </p>
 
     <h2>Data Collection</h2>
@@ -38,14 +40,15 @@
       <li>Use analytics SDKs, crash reporting services, or third-party tracking</li>
       <li>Create or require a user account</li>
       <li>Communicate with any server operated by the developer</li>
+      <li>Send your temporary source-candidate cache anywhere off your device</li>
     </ul>
 
     <h2>How the Extension Works</h2>
-    <p>When you right-click an image and select a save format, the extension:</p>
+    <p>When you right-click an image and choose one of the extension's actions, the extension:</p>
     <ol style="margin: 0 0 16px 24px; color: #4b5563;">
-      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Reads the URL of the image from the browser's context menu event.</li>
-      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Fetches the image bytes from that URL.</li>
-      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Passes the image data to a hidden offscreen document where it is drawn onto an HTML Canvas element and converted.</li>
+      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Reads the displayed image URL from Chrome's context menu event and, on supported pages, captures likely source-image candidates from the image element you clicked.</li>
+      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Fetches the best available image URL directly from the site you are using. This fetch is the only network request the extension makes.</li>
+      <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Passes the image bytes to a hidden offscreen document where they are drawn onto an HTML Canvas element and converted. Depending on the action you choose, the extension may remove a white/checker preview background or add a white/black fill behind transparency.</li>
       <li style="margin-bottom: 6px; font-size: 15px; line-height: 1.7;">Saves the converted file to your Downloads folder using Chrome's built-in download API.</li>
     </ol>
     <p>
@@ -53,14 +56,12 @@
     </p>
 
     <h2>Settings Storage</h2>
-    <p>The extension stores preferences in <code>chrome.storage.local</code>:</p>
+    <p>The extension stores a small amount of local state to make the product work:</p>
     <ul>
-      <li>Your selected default format (PNG, JPG, or WebP)</li>
-      <li>Your output quality setting (1–100)</li>
-      <li>A count of successful conversions</li>
-      <li>Whether you have dismissed the "Rate Us" prompt</li>
+      <li><code>chrome.storage.local</code>: your selected default format, output quality setting, successful conversion count, and whether you dismissed the rate prompt</li>
+      <li><code>chrome.storage.session</code>: a short-lived, per-tab cache of the displayed image URL and possible source-image candidates to improve matching when pages use previews or thumbnails</li>
     </ul>
-    <p>This data never leaves your device.</p>
+    <p>This data never leaves your device. The session cache is cleared automatically when tabs close or the cached entry becomes stale.</p>
 
     <h2>Permissions Explained</h2>
     <table>
@@ -73,7 +74,7 @@
       <tbody>
         <tr>
           <td><code>contextMenus</code></td>
-          <td>Adds the "Save Image As PNG/JPG/WebP" items to the right-click menu</td>
+          <td>Adds the image conversion and background actions to the right-click menu</td>
         </tr>
         <tr>
           <td><code>downloads</code></td>
@@ -89,7 +90,11 @@
         </tr>
         <tr>
           <td><code>storage</code></td>
-          <td>Reads and writes your extension preferences to local storage</td>
+          <td>Stores your local preferences, counters, and short-lived per-tab source-candidate cache</td>
+        </tr>
+        <tr>
+          <td><code>&lt;all_urls&gt;</code></td>
+          <td>Allows the extension to fetch the image you clicked and read likely source-image candidates from the current page so preview images can resolve to better image URLs</td>
         </tr>
       </tbody>
     </table>
